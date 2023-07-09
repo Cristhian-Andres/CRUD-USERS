@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <?!= include('css') ?>
+  </head>
+  <title>Document</title>
+  <body>
+    <main class="container">
+      <h1 class="mb-5 text-center">Registro de usuarios</h1>
+      <div class="d-flex justify-content-between mb-3">
+        <div class="col">
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal"><i class="bi bi-plus-square"> Agregar</i></button>
+        </div>
+        <div class="col-3">
+          <input type="text" class="form-control" id="buscarRegistro" placeholder="Buscar">
+        </div>
+      </div>
+      <!-- Tabla de registros -->
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Nombres</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col">Sexo</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Fecha Nacimiento</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody-usuarios">
+        </tbody>
+      </table>
+    </main>
+    <template id="rowTemplate">
+      <tr>
+        <td class="template-nombres"></td>
+        <td class="template-apellidos"></td>
+        <td class="template-sexo"></td>
+        <td class="template-correo"></td>
+        <td class="template-nacimiento"></td>
+        <td class="template-telefono"></td>
+        <td class="template-acciones text-center">
+          <i class="bi bi-pencil me-3 button-edit" role="button" onclick="editarUsuarioModal(this)"></i>
+          <i class="bi bi-trash me-3 button-delete" role="button" onclick="eliminarUsuarioModal(this)"></i>
+        </td>
+      </tr>
+    </template>
+    <!-- Modal create-->
+    <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="createModalLabel">Crear usuario</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="" name="crearUsuario" id="crearUsuario">
+              <div class="col mb-3">
+                <input type="text" class="form-control" id="usuarioId" name="usuarioId" placeholder="#" hidden>
+              </div>
+              <div class="row mb-3">
+                <div class="col">
+                  <input type="text" class="form-control" id="nombreUsuario" name="nombreUsuario" placeholder="Nombres" required>
+                </div>
+                <div class="col">
+                  <input type="text" class="form-control" id="apellidoUsuario" name="apellidoUsuario" placeholder="Apellidos" required>
+                </div>
+              </div>
+              <select name="sexoUsuario" id="sexoUsuario" aria-label="sexoUsuario" class="form-select mb-3">
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="N/A">Prefieron no decirlo</option>
+              </select>
+              <div class="mb-3">
+                <input type="email" name="emailUsuario" id="emailUsuario" class="form-control" placeholder="Correo electrónico" required>
+              </div>
+              <div class="mb-3">
+                <input type="date" name="fechaNacimientoUsuario" id="fechaNacimientoUsuario" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <input type="number" name="telefonoUsuario" id="telefonoUsuario" class="form-control" required>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="borrarForm()">Cerrar</button>
+            <button type="button" class="btn btn-primary" onclick="validarFormulario()" id="guardarUsuario">Guardar</button>
+            <button class="btn btn-success d-none btnLoading" type="button" disabled id="loadingButton">
+              <span class="spinner-border spinner-border-sm " role="status" aria-hidden="true"></span>
+              Cargando...
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Eliminar usuario Modal-->
+    <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="eliminarModalLabel">Eliminar usuario</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>¿Seguro quieres eliminar este usuario?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="borrarForm()">Cerrar</button>
+            <button type="button" class="btn btn-danger" onclick="validarEliminarUsuario(this)" id="eliminarUsuario">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <?!= include('main') ?>
+  </body>
+</html>
